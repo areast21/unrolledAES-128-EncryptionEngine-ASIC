@@ -1,0 +1,21 @@
+read_liberty -lib /mnt/volume_nyc1_01/skywater-pdk/libraries/sky130_fd_sc_hd/latest/timing/sky130_fd_sc_hd__ss_n40C_1v60.lib
+
+read_verilog ../rtl/addRndKey.v
+read_verilog ../rtl/aesEncCore.v
+read_verilog ../rtl/aesFinalRound.v
+read_verilog ../rtl/aesRound.v
+read_verilog ../rtl/aesSBox.v
+read_verilog ../rtl/genRndKey.v
+read_verilog ../rtl/mixColumn.v
+read_verilog ../rtl/multiplier.v
+read_verilog ../rtl/shiftRow.v
+read_verilog ../rtl/subByteTransform.v
+
+synth -top aesEncCore
+flatten
+dfflibmap -liberty /mnt/volume_nyc1_01/skywater-pdk/libraries/sky130_fd_sc_hd/latest/timing/sky130_fd_sc_hd__ss_n40C_1v60.lib
+abc -liberty /mnt/volume_nyc1_01/skywater-pdk/libraries/sky130_fd_sc_hd/latest/timing/sky130_fd_sc_hd__ss_n40C_1v60.lib
+opt_clean
+
+stat -liberty /mnt/volume_nyc1_01/skywater-pdk/libraries/sky130_fd_sc_hd/latest/timing/sky130_fd_sc_hd__ss_n40C_1v60.lib
+write_verilog aesEncCore_gl.v
